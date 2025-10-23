@@ -1,0 +1,35 @@
+classDiagram
+    class login {
+        -correo: string
+        -password: string
+    }
+
+    class estudiante {
+        -id_estudiante: int
+        -nombre: string
+        -apellido: string
+        -carrera: string
+        -correo: string
+    }
+
+    class curso {
+        -codigo: string
+        -nombre: string
+        -credito_ int 
+    }
+
+    class profesor {
+        -id_profesor: int 
+        -nombre: string
+        -apellido: string
+        -especialidad: string
+        -correo: string
+    }
+
+    login "1" --> estudiante: inicia
+    login "1" --> profesor: inicia
+    estudiante "*" --> curso: matricula y consulta
+    estudiante "1" --> login: cierra
+    profesor "1" --> login: cierra
+    profesor "0..*" --> curso: puede impartir
+

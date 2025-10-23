@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Inicio de Sesión</title>
+  </head>
+  <body style="font-family: 'Poppins', sans-serif; background-color: #aab2f8">
+  <img src="images/logo_uc.png" 
+       alt="Logo de la Universidad" 
+       style="
+         width: 150px;
+         margin: 10px 0;
+         opacity: 0.5;
+         ">
+    
+    <header style="
+        text-align: center;
+        padding: 10px;
+        color: white;
+        text-shadow: 5px 5px 4px rgba(0, 0, 0, 0.4);
+        width: 350px;
+        height: 140px;
+        background-color: #4c7faf;
+        margin: 0 auto;
+        box-shadow: 10px 10px 10px rgba(228, 69, 149, 0.3);
+        border-radius: 10px;
+        ">
+        
+        <h1>Plataforma Educativa</h1>
+        <h1>Universidad Central</h1>
+    </header>
+
+    <main
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 70vh;
+      "
+    >
+      <section
+        style="
+          background: white;
+          padding: 30px;
+          border-radius: 10px;
+          box-shadow: 0 0 30px gray;
+        "
+      >
+        <h2 style="text-align: center">Iniciar Sesión</h2>
+        <form
+          action="pages/estudiantes.html"
+          method="get"
+          style="display: flex; flex-direction: column; gap: 10px"
+        >
+          <label>Correo:</label>
+          <input type="email" name="correo" required style="padding: 8px" />
+
+          <label>Contraseña:</label>
+          <input type="password" name="clave" required style="padding: 8px" />
+
+          <button
+            type="submit"
+            style="
+              background: #4caf50;
+              color: white;
+              padding: 10px;
+              border: 0;
+              border-radius: 5px;
+              cursor: pointer;
+              text-transform: uppercase;
+              font-size: 16px;
+              font-weight: bold;
+              width: 100%;
+              text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+              transition: background-color 1.0s ease;
+            "
+            onmouseover="this.style.background='rgb(58, 236, 82)'"
+            onmouseout="this.style.background='#4caf50'"
+            >
+            Entrar
+          </button>
+        </form>
+      </section>
+
+    </main>
+<section id="video-section" style="
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 10px;                
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+  width: fit-content;  
+">
+
+  <iframe 
+    width="420" 
+    height="236"
+    src="https://www.youtube.com/embed/-GhGUFc6w5w?si=yF_gvNEVQEbkbrO4"
+    title="Video Incrustado"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
+    style="
+      border-radius: 15px; 
+      overflow: hidden; 
+    ">
+  </iframe>
+</section>
+
+
+    <!--Pie de página -->
+<footer style="
+  width: 100%;
+  background-color: #4c7faf;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  border-radius: 10px;
+  margin: 0;
+">
+
+  <!-- Primera sección -->
+  <section style="margin:0;">
+    <h1 style="text-shadow: 5px 5px 4px rgba(0, 0, 0, 0.4); font-size: 30px;"
+    >Universidad Central</h1>
+    <p style="font-style: italic; font-weight: bold;"
+    >&copy; 2025 Plataforma Educativa</p>
+    <p style="font-style: italic; font-weight: bold;">
+      Contacto:
+      <a href="mailto:oldhernandezjim@uc.ac.cr"
+         style="color: rgb(58, 236, 82); text-decoration: none;">Oldemar</a>
+    </p>
+    <h2 style="text-shadow: 5px 5px 4px rgba(0, 0, 0, 0.4); font-size: 20px;"
+    >Información adicional</h2>
+  </section>
+
+  <!-- Segunda sección dentro del mismo footer -->
+  <section style="
+    background-color: #1e2b37;
+    margin: 0;
+    padding: 5px 0;
+
+  ">
+    <p style="font-size: 12px;">Todos los derechos reservados.</p>
+    <p style="font-size: 12px;">Para mas información, visite nuestro sitio web.</p>
+  </section>
+
+</footer>
+
+  </body>
+</html>
