@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="estilos.css">
+  <title>Laboratorios - Plataforma Educativa</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<style>
+body{
+     background-image: url(images/Imagen_Universidad.jpg);
+}
+</style>
+
+<body> 
+  <!-- Logo institucional -->
+  <img src="images/logo_uc.png" 
+       alt="Logo de la Universidad" 
+       class="box">
+
+  <!-- Encabezado -->
+  <header>
+    <div class="header-titles">
+      <h1 id="main-title" class="title display-6">Plataforma Educativa</h1>
+      <h2 class="title h4 text-muted">Universidad Central</h2>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <main
+    style="
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      height: 70vh;
+    "
+  >
+    <section>
+      <div class="card-demo">  
+      <h2 style="text-align: center">Iniciar Sesión</h2>
+      <form
+        action="pages/menu.html"
+        method="get"
+        style="display: flex; flex-direction: column; gap: 10px"
+      >
+        <!-- Correo (email) -->
+        <div class="mb-3">
+          <label for="correo" class="form-label">Correo electrónico</label>
+          <input type="email" class="form-control" id="correo" name="correo"
+                 placeholder="nombre@ejemplo.com" required />
+          <div class="invalid-feedback">Ingrese un correo electrónico válido.</div>
+        </div>
+
+        <!-- Contraseña -->
+        <div class="mb-3">
+          <label for="password" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" id="password" name="password"
+                 placeholder="Contraseña" required />
+          <div class="invalid-feedback">Ingrese la contraseña.</div>       
+        </div>   
+
+        <!-- Botón -->
+        <button
+          class="boton"
+          type="submit"
+          onmouseover="this.style.background='rgb(58, 236, 82)'"
+          onmouseout="this.style.background='#4caf50'"
+        >
+          Entrar
+        </button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Video -->
+  <section id="video-section" style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 10px;                
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+    width: fit-content;  
+  ">
+    <iframe 
+      width="420" 
+      height="236"
+      src="https://www.youtube.com/embed/-GhGUFc6w5w?si=yF_gvNEVQEbkbrO4"
+      title="Video Incrustado"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen
+      style="
+        border-radius: 15px; 
+        overflow: hidden; 
+      ">
+    </iframe>
+  </section>
+
+  <!-- Pie de página -->
+  <footer>
+    <section style="margin:0;">
+      <h1 style="text-shadow: 5px 5px 4px rgba(0, 0, 0, 0.4); font-size: 30px;">
+        Universidad Central
+      </h1>
+      <p style="font-style: italic; font-weight: bold;">
+        &copy; 2025 Plataforma Educativa
+      </p>
+      <p style="font-style: italic; font-weight: bold;">
+        Contacto:
+        <a href="mailto:oldhernandezjim@uc.ac.cr"
+           style="color: rgb(58, 236, 82); text-decoration: none;">Oldemar</a>
+      </p>
+      <h2 style="text-shadow: 5px 5px 4px rgba(0, 0, 0, 0.4); font-size: 20px;">
+        Información adicional
+      </h2>
+    </section>
+
+    <section style="
+      background-color: #1e2b37;
+      margin: 0;
+      padding: 5px 0;
+    ">
+      <p style="font-size: 12px;">Todos los derechos reservados.</p>
+      <p style="font-size: 12px;">Para más información, visite nuestro sitio web.</p>
+    </section>
+  </footer>
+
+</body>
+</html>
+
