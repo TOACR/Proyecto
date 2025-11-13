@@ -1,0 +1,142 @@
+    /* Fondo con imagen, transparencia y autoajuste */
+    body {
+      position: relative;
+      min-height: 100vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* Capa semitransparente sobre la imagen */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.3); /* Ajusta opacidad (0.1 - 0.8) */
+      z-index: -1; /* Envía detrás de todo */
+    }
+
+    /* Tu estilo original del encabezado */
+    header .header-titles { 
+      color: white;
+      text-align: center; 
+      padding: 1.5rem 0; 
+      text-shadow: 5px 5px 4px rgba(0, 0, 0, 0.4); 
+      width:auto;
+      background-color: #6cb2f39c;
+      margin: 20px auto;
+      box-shadow: 10px 10px 10px rgba(44, 43, 44, 0.3);
+      border-radius: 10px;
+    }
+
+    .box {
+     left: 0;
+     line-height: normal;
+     text-align: center;
+     color: #fff;
+     background: var(--primary);
+     border-radius: 8px;
+     animation: slide-responsive 15s ease-in-out infinite alternate;
+    }
+
+    /* Movimiento horizontal adaptativo */
+    @keyframes slide-responsive {
+      from { transform: translateX(0); }
+      to   { transform: translateX(calc(100vw - 100% - 40px)); } 
+    }
+
+    /* Pausar animación al pasar el mouse */
+    .box:hover {
+      animation-play-state: paused; cursor: pointer;
+    }
+
+    .card-demo {
+      background: rgba(255, 255, 255, 0.671);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgb(0, 0, 0);
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+
+    .card-demo:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      background: #fff;
+      box-shadow: 0 10px 30px rgb(0, 132, 255);
+    }
+    header .title { margin: 0; line-height: 1.2; }
+
+    .boton {
+      background: #4caf50;
+      color: white;
+      padding: 10px;
+      border: 0;
+      border-radius: 5px;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-size: 16px;
+      font-weight: bold;
+      width: 100%;
+      text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+      transition: background-color 1s ease;
+    }
+
+    footer {
+      width: 100%;
+      background-color: #4c7faf;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      border-radius: 10px;
+      margin: 0;
+      box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
+    }
+
+    nav.menu { 
+      background: #0066ff; 
+      text-decoration: none; padding: 3px 3px; border-radius: 10px;
+    }
+
+    nav.menu a { 
+      color: #ffffff; 
+      text-decoration: none; padding: 8px 20px; border-radius: 10px;
+      transition: background-color 1s ease;
+
+    }
+    
+    nav.menu ul { 
+      margin: 0; padding: .5rem 1rem; display: flex; gap: 1rem; 
+      list-style: none; justify-content: center; 
+    }
+    
+    nav.menu a:hover { 
+      text-decoration: underline;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white; /* Fondo blanco sólido */
+    }
+
+    table th,
+    table td {
+      padding: 8px;
+      border: 1px solid #ccc;
+    }
+
+    table thead {
+      background-color: #40a561;
+      color: white;
+    }
+
