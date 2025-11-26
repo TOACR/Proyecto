@@ -4,6 +4,14 @@ classDiagram
         -password: string
     }
 
+    class menu {
+        -menu:  link button
+        -estudiante: link button
+        -curso: link button
+        -profesor: link button
+        -contacto: link button
+        -salir: link button
+    }
     class estudiante {
         -id_estudiante: int
         -nombre: string
@@ -15,7 +23,7 @@ classDiagram
     class curso {
         -codigo: string
         -nombre: string
-        -credito_ int 
+        -creditos_ int 
     }
 
     class profesor {
@@ -26,10 +34,31 @@ classDiagram
         -correo: string
     }
 
-    login "1" --> estudiante: inicia
-    login "1" --> profesor: inicia
-    estudiante "*" --> curso: matricula y consulta
-    estudiante "1" --> login: cierra
-    profesor "1" --> login: cierra
-    profesor "0..*" --> curso: puede impartir
+    class contacto {
+        -nombre: string
+        -correo: string
+        -asunto: string
+        -mensaje: string
+    }
+    class salir{
+        -salir: link button
+    }
+
+    login "estudiante" --> menu: ingresa
+    login "profesor" --> menu: ingresa
+    menu "estudiante" --> estudiante
+    menu "profesor" --> profesor
+    estudiante "*" --> curso: puede matricular
+    profesor "*" --> curso: puede impartir
+    curso "*" --> contacto
+    contacto "1" --> salir
+    salir "1" --> login: cierra sesión
+    
+
+
+    
+
+    
+
+
 

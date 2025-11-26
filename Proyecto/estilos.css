@@ -22,7 +22,7 @@
       z-index: -1; /* Envía detrás de todo */
     }
 
-    /* Tu estilo original del encabezado */
+    /* Estilo del encabezado principal */
     header .header-titles { 
       color: white;
       text-align: center; 
@@ -35,6 +35,15 @@
       border-radius: 10px;
     }
 
+    /* Estilo del encabezado secundario */
+    header .header-titles-sec { 
+      color: white;
+      text-align: center; 
+      padding: 1.5cap 0; 
+      text-shadow: 5px 5px 4px rgba(0, 0, 0, 0.76); 
+      width:auto;
+
+    }
     .box {
      left: 0;
      line-height: normal;
