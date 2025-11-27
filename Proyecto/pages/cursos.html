@@ -38,23 +38,64 @@ body{
     </ul>
   </nav>
 
-  <main style="padding:20px;">
-    <header>
+<main style="padding:20px;">
+  <header>
     <div class="header-titles-sec">
       <h1 id="main-title" class="title display">Lista de Cursos</h1>
     </div>
-    </header>
-    <section>
-      <table border="1" style="width:100%; border-collapse:collapse;">
-        <thead style="background-color:#ff9800; color:white;">
-          <tr><th>Código</th><th>Curso</th><th>Créditos</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>IP-101</td><td>Introducción a la Programación</td><td>4</td>
-          <tr><td>AD-201</td><td>Contabilidad Básica</td><td>3</td>
-        </tbody>
-      </table>
-    </section>
-  </main>
+  </header>
+
+  <section>
+    <table border="1" style="width:100%; border-collapse:collapse;">
+      <thead style="background-color:#ff9800; color:white;">
+        <tr>
+          <th>Código</th>
+          <th>Curso</th>
+          <th>Créditos</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="lista-cursos">
+        <!-- Los cursos se agregarán aquí dinámicamente -->
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<div class="form-wrapper">
+  <form id="curso-form" class="curso-card">
+    <h2 id="form-title">Registrar curso</h2>
+
+    <input type="hidden" id="curso-id" />
+
+    <div class="form-group">
+      <label for="codigo">Código</label>
+      <input type="text" id="codigo" required />
+    </div>
+
+    <div class="form-group">
+      <label for="nombre">Nombre del curso</label>
+      <input type="text" id="nombre" required />
+    </div>
+
+    <div class="form-group">
+      <label for="creditos">Créditos</label>
+      <input type="number" id="creditos" required min="1" max="10" />
+    </div>
+
+    <div class="btn-row">
+      <button type="submit" id="btn-save" class="btn-primary">Guardar</button>
+      <button type="button" id="btn-cancel" class="btn-secondary" style="display:none;">Cancelar</button>
+    </div>
+
+    <div id="status"></div>
+  </form>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="module" src="../app.js"></script>
+
+
 </body>
 </html>
