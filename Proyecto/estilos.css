@@ -242,6 +242,23 @@
   color: #4caf50;
 }
 
+.filtro-container {
+  margin: 20px auto;
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+#filtro-texto {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
 
     
 
