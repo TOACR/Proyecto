@@ -33,9 +33,45 @@ listaCursos.addEventListener("click", async (e) => {
     }
 });
 
+const filtroTexto = document.getElementById("filtro-texto");
+const btnFiltrar = document.getElementById("btn-filtrar");
+const btnLimpiar = document.getElementById("btn-limpiar");
+
+btnFiltrar.addEventListener("click", () => {
+    filtrarCursos();
+});
+
+btnLimpiar.addEventListener("click", () => {
+    filtroTexto.value = "";
+    cargarCursos(); // vuelve a cargar todo
+});
+
 //===============================
 //CRUD (CREATE, READ, UPDATE, DELETE)
 //===============================
+function filtrarCursos() {
+    const texto = filtroTexto.value.trim().toLowerCase();
+
+    if (texto === "") {
+        cargarCursos();
+        return;
+    }
+
+    // Revisamos cada fila de la tabla
+    const filas = listaCursos.querySelectorAll("tr");
+
+    filas.forEach(fila => {
+        const codigo = fila.children[0].textContent.toLowerCase();
+        const nombre = fila.children[1].textContent.toLowerCase();
+
+        // Mostrar solo filas que coincidan parcial
+        if (codigo.includes(texto) || nombre.includes(texto)) {
+            fila.style.display = "";
+        } else {
+            fila.style.display = "none";
+        }
+    });
+}
 
 async function cargarCursos() {
     let { data: cursos, error } = await supabase.from("Cursos").select("*");
