@@ -3,7 +3,6 @@ import { supabase } from "./supabaseClient.js";
 // DOM
 const lista = document.getElementById("lista-profesores");
 const alertTop = document.getElementById("alert-top");
-
 const filtroTexto = document.getElementById("filtro-texto");
 document.getElementById("btn-filtrar").addEventListener("click", filtrar);
 document.getElementById("btn-limpiar").addEventListener("click", () => {
@@ -110,16 +109,17 @@ async function cargarProfesores() {
   // ================================
   // MAP 
   // ================================
-  const map = new Map();
+const map = new Map();
 
-  pcs.forEach(x => {
-    const label = x.Cursos
-      ? `${x.Cursos.codigo} - ${x.Cursos.nombre}`
-      : "";
+pcs.forEach(x => {
+  if (!x.profesor_id) return;
 
-    if (!map.has(x.profesor_id)) map.set(x.profesor_id, []);
-    if (label) map.get(x.profesor_id).push(label);
-  });
+  const label = x.Cursos ? `${x.Cursos.codigo} - ${x.Cursos.nombre}` : "";
+
+  if (!map.has(x.profesor_id)) map.set(x.profesor_id, []);
+  if (label) map.get(x.profesor_id).push(label);
+});
+
 
   // Unir profesores + cursos
   const dataFinal = profesores.map(p => ({
@@ -234,25 +234,31 @@ form.addEventListener("submit", async (e) => {
   // =============================
   // 2️⃣ Insertar CURSOS (tabla puente)
   // =============================
-  const rows = cursosIds.map(cursoId => ({
-    profesor_id: profesor.id,
-    curso_id: cursoId
-  }));
+const rows = cursosIds.map(cursoId => ({
+  profesor_id: profesor.id,
+  curso_id: cursoId
+}));
 
-  const { error: errorCursos } = await supabase
-    .from("ProfesoresCursos")
-    .insert(rows);
+const { data: inserted, error: errorCursos } = await supabase
+  .from("ProfesoresCursos")
+  .insert(rows)
+  .select("id, profesor_id, curso_id");  // 👈 confirma cuántos insertó
 
-  if (errorCursos) {
-    console.error(errorCursos);
-    statusDiv.innerHTML = `<div class="alert alert-warning">
-      Profesor creado, pero error al asignar cursos
-    </div>`;
-  } else {
-    statusDiv.innerHTML = `<div class="alert alert-success">
-      Profesor registrado correctamente ✅
-    </div>`;
-  }
+console.log("cursosIds:", cursosIds);
+console.log("rows:", rows);
+console.log("inserted:", inserted);
+
+if (errorCursos) {
+  console.error(errorCursos);
+  statusDiv.innerHTML = `<div class="alert alert-warning">
+    Profesor creado, pero error al asignar cursos
+  </div>`;
+} else {
+  statusDiv.innerHTML = `<div class="alert alert-success">
+    Profesor registrado correctamente ✅ (cursos insertados: ${inserted?.length ?? 0})
+  </div>`;
+}
+
 
   form.reset();
   await cargarProfesores();
@@ -301,9 +307,16 @@ lista.addEventListener("click", async (e) => {
 
 // Actualizar desde modal (profesor + re-asignar 1 curso)
 async function actualizarDesdeModal() {
+
+  document.getElementById("btn-modal-guardar")
+  .addEventListener("click", async () => {
+    await actualizarDesdeModal();
+  });
+
   clearAlert(mStatus);
 
   const id = Number(mId.value);
+
   const payload = {
     nombre: mNombre.value.trim(),
     apellido1: mA1.value.trim(),
@@ -311,27 +324,81 @@ async function actualizarDesdeModal() {
     correo: mCorreo.value.trim(),
     carrera_id: Number(mCarrera.value)
   };
-  const cursoId = Number(mCurso.value);
 
-  if (!id || !payload.nombre || !payload.apellido1 || !payload.apellido2 || !payload.correo || !payload.carrera_id || !cursoId) {
+  const cursosIds = [...new Set(
+  Array.from(mCurso.selectedOptions).map(o => Number(o.value))
+  )].filter(n => Number.isInteger(n) && n > 0);
+  
+
+  if (!Number.isFinite(id) || id <= 0) {
+  showAlert(mStatus, "ID inválido.", "danger");
+  return;
+  }
+
+  if (!payload.nombre || !payload.apellido1 || !payload.apellido2 || !payload.correo || !payload.carrera_id) {
     showAlert(mStatus, "Complete todos los campos.", "danger");
     return;
   }
+  if (cursosIds.length === 0) {
+    showAlert(mStatus, "Seleccione al menos un curso.", "danger");
+    return;
+  }
 
-  showAlert(mStatus, "Actualizando...", "info");
+  // 1) actualizar profesor
+  const { error: errProf } = await supabase
+    .from("Profesores")
+    .update(payload)
+    .eq("id", id);
 
-  const { error } = await supabase.from("Profesores").update(payload).eq("id", id);
-  if (error) { console.error(error); showAlert(mStatus, "Error al actualizar profesor.", "danger"); return; }
+  if (errProf) {
+    console.error(errProf);
+    showAlert(mStatus, "Error actualizando profesor.", "danger");
+    return;
+  }
 
-  // Reemplazar asignación (1 curso)
-  await supabase.from("ProfesoresCursos").delete().eq("profesor_id", id);
-  const { error: err2 } = await supabase.from("ProfesoresCursos").insert([{ profesor_id: id, curso_id: cursoId }]);
-  if (err2) { console.error(err2); showAlert(mStatus, "Profesor actualizado, pero error asignando curso.", "warning"); }
+  // 2) borrar cursos anteriores
+  const { error: errDel } = await supabase
+    .from("ProfesoresCursos")
+    .delete()
+    .eq("profesor_id", id);
 
-  showAlert(alertTop, "Profesor actualizado ✅", "success");
+  if (errDel) {
+    console.error(errDel);
+    showAlert(mStatus, "Error limpiando cursos anteriores.", "warning");
+    return;
+  }
+
+  // 3) insertar nuevos cursos
+const rows = cursosIds.map(cursoId => ({
+  profesor_id: id,
+  curso_id: cursoId
+}));
+
+const { error: errUpsert } = await supabase
+  .from("ProfesoresCursos")
+  .delete()
+  .eq("profesor_id", id)
+  .not("curso_id", "in", `(${cursosIds.join(",")})`);
+
+if (errUpsert) {
+  console.error(errUpsert);
+  showAlert(mStatus, "Error asignando cursos.", "danger");
+  return;
+
+  }
+  const { error: err2 } = await supabase.from("ProfesoresCursos").insert(rows);
+
+  if (err2) {
+  console.error(err2);
+  showAlert(mStatus, "Error asignando cursos.", "warning");
+  return;
+  }
+
+  showAlert(mStatus, `Profesor actualizado ✅ (cursos seleccionados: ${cursosIds.length})`, "success");
   modalEdit.hide();
   await cargarProfesores();
 }
+
 
 // Eliminar con modal
 btnConfirmDelete.addEventListener("click", async () => {

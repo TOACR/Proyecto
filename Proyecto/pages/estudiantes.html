@@ -6,17 +6,21 @@
   <title>Estudiantes</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- ✅ Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
   <link rel="stylesheet" href="../estilos.css">
+
+  <style>
+    body{
+      background-image: url(../images/Imagen_Estudiantes.png);
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
 </head>
 
-<style>
-body{
-  background-image: url(../images/Imagen_Estudiantes.png);
-}
-</style>
-
 <body>
-
 <div class="container-uc">
 
   <!-- Logo institucional -->
@@ -30,16 +34,52 @@ body{
     </div>
   </header>
 
-  <!-- Menú -->
-  <nav class="menu">
-    <ul>
-      <li><a href="menu.html">Menu</a></li>
-      <li><a href="estudiantes.html">Estudiantes</a></li>
-      <li><a href="cursos.html">Cursos</a></li>
-      <li><a href="profesores.html">Profesores</a></li>
-      <li><a href="contacto.html">Contacto</a></li>
-      <li><a href="#" id="btn-salir">Salir</a></li>
-    </ul>
+  <!-- ✅ Mini-nav -->
+  <nav class="uc-nav-grid" aria-label="Navegación principal">
+
+    <a class="uc-nav-item" href="menu.html">
+      <div class="uc-nav-card">
+        <i class="bi bi-grid-1x2-fill uc-nav-icon"></i>
+        <p class="uc-nav-title">Menú</p>
+      </div>
+    </a>
+
+    <!-- ✅ activo aquí -->
+    <a class="uc-nav-item uc-nav-active" href="estudiantes.html">
+      <div class="uc-nav-card">
+        <i class="bi bi-people-fill uc-nav-icon"></i>
+        <p class="uc-nav-title">Estudiantes</p>
+      </div>
+    </a>
+
+    <a class="uc-nav-item" href="cursos.html">
+      <div class="uc-nav-card">
+        <i class="bi bi-journal-bookmark-fill uc-nav-icon"></i>
+        <p class="uc-nav-title">Cursos</p>
+      </div>
+    </a>
+
+    <a class="uc-nav-item" href="profesores.html">
+      <div class="uc-nav-card">
+        <i class="bi bi-person-badge-fill uc-nav-icon"></i>
+        <p class="uc-nav-title">Profesores</p>
+      </div>
+    </a>
+
+    <a class="uc-nav-item" href="contacto.html">
+      <div class="uc-nav-card">
+        <i class="bi bi-envelope-fill uc-nav-icon"></i>
+        <p class="uc-nav-title">Contacto</p>
+      </div>
+    </a>
+
+    <a class="uc-nav-item" href="#" id="btn-salir">
+      <div class="uc-nav-card">
+        <i class="bi bi-box-arrow-right uc-nav-icon" style="color:#dc3545;"></i>
+        <p class="uc-nav-title">Salir</p>
+      </div>
+    </a>
+
   </nav>
 
   <main>
@@ -51,7 +91,8 @@ body{
 
     <!-- Filtro -->
     <div class="filtro-container">
-      <input type="text" id="filtro-texto" class="form-control" placeholder="Buscar por nombre, apellidos, correo o carrera..." />
+      <input type="text" id="filtro-texto" class="form-control"
+             placeholder="Buscar por nombre, apellidos, correo o carrera..." />
       <button id="btn-filtrar" class="btn btn-primary">Consultar</button>
       <button id="btn-limpiar" class="btn btn-secondary">Mostrar todos</button>
     </div>
@@ -111,8 +152,8 @@ body{
           <option value="">-- Seleccione --</option>
         </select>
 
-        <!-- Opcional: abrir modal para agregar carrera -->
-        <button type="button" class="btn btn-outline-secondary btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#modalNuevaCarrera">
+        <button type="button" class="btn btn-outline-secondary btn-sm mt-2"
+                data-bs-toggle="modal" data-bs-target="#modalNuevaCarrera">
           + Agregar carrera
         </button>
       </div>
@@ -130,7 +171,6 @@ body{
   <div class="modal fade" id="modalEditarEstudiante" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-
         <div class="modal-header">
           <h5 class="modal-title">Editar estudiante</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
@@ -171,7 +211,6 @@ body{
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
           <button type="button" id="btn-modal-guardar" class="btn btn-success">Actualizar</button>
         </div>
-
       </div>
     </div>
   </div>
@@ -180,7 +219,6 @@ body{
   <div class="modal fade" id="modalConfirmDelete" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-
         <div class="modal-header">
           <h5 class="modal-title">Confirmar eliminación</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
@@ -196,7 +234,6 @@ body{
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
           <button type="button" id="btn-confirm-delete" class="btn btn-danger">Sí, eliminar</button>
         </div>
-
       </div>
     </div>
   </div>
@@ -205,7 +242,6 @@ body{
   <div class="modal fade" id="modalNuevaCarrera" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-
         <div class="modal-header">
           <h5 class="modal-title">Agregar carrera</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
@@ -223,7 +259,6 @@ body{
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
           <button type="button" id="btn-guardar-carrera" class="btn btn-primary">Guardar carrera</button>
         </div>
-
       </div>
     </div>
   </div>
@@ -232,8 +267,7 @@ body{
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script type="module" src="auth-guard.js"></script>
+<script type="module" src="../auth-guard.js"></script>
 <script type="module" src="../estudiantes.js"></script>
-
 </body>
 </html>

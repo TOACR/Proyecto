@@ -35,7 +35,7 @@ form.addEventListener("submit", async (e) => {
   sessionStorage.setItem("auth", "1");
 
   // Ir al menú SIN permitir volver con atrás
-  window.location.replace("pages/menu.html");
+  window.location.replace("login.html");
 });
 
 // REGISTRO

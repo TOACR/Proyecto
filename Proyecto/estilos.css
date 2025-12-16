@@ -110,28 +110,69 @@
       box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
     }
 
-    nav.menu { 
-      background: #0066ff; 
-      text-decoration: none; padding: 3px 3px; border-radius: 10px;
-      margin: 12px auto 18px auto;
-    }
+    /* Mini menú tipo dashboard (compacto) */
+.uc-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: .75rem;
+  margin: 1rem 0 1.25rem;
+}
 
-    nav.menu a { 
-      color: #ffffff; 
-      text-decoration: none; padding: 8px 20px; border-radius: 10px;
-      transition: background-color 1s ease;
+@media (max-width: 992px) {
+  .uc-nav-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 576px) {
+  .uc-nav-grid { grid-template-columns: repeat(2, 1fr); }
+}
 
-    }
-    
-    nav.menu ul { 
-      margin: 0; padding: .5rem 1rem; display: flex; gap: 1rem; 
-      list-style: none; justify-content: center; 
-    }
-    
-    nav.menu a:hover { 
-      text-decoration: underline;
-      background-color: rgba(0, 0, 0, 0.3);
-    }
+.uc-nav-item {
+  text-decoration: none;
+  color: inherit;
+}
+
+.uc-nav-card{
+  border-radius: 14px;
+  padding: .75rem .75rem;
+  text-align: center;
+  background: rgba(255, 232, 232, 0.92);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  transition: transform .15s ease, box-shadow .15s ease;
+  height: 100%;
+}
+
+.uc-nav-card{
+  background: rgba(196, 251, 255, 0.555);
+  border: 1px solid rgba(0,0,0,.10);
+}
+
+.uc-nav-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, 0.15);
+}
+
+.uc-nav-icon {
+  font-size: 1.6rem; 
+  line-height: 1;
+  margin-bottom: .25rem;
+  display: inline-block;
+  color: #5fbe92;
+}
+.uc-nav-icon{
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+  color: #1f67c5;
+}
+
+.uc-nav-title {
+  font-size: .9rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.uc-nav-active .uc-nav-card{
+  outline: 2px solid rgb(25, 0, 255);
+  box-shadow: 0 .6rem 1.2 rem rgba(0,102,255,.12);
+}
 
     table {
       width: 100%;
@@ -317,6 +358,7 @@ header, nav.menu, main, .form-wrapper{
   background-color: rgba(255, 152, 0, 0.12) !important;
   cursor: pointer;
 }
+
 
 
     
