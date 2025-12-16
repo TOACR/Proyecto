@@ -4,30 +4,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Estudiantes</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="../estilos.css">
 </head>
+
 <style>
 body{
-     background-image: url(../images/Imagen_Estudiantes.png);
+  background-image: url(../images/Imagen_Estudiantes.png);
 }
 </style>
 
 <body>
+
+<div class="container-uc">
+
   <!-- Logo institucional -->
-  <img src="../images/logo_uc.png" 
-       alt="Logo de la Universidad" 
-       class="box">
+  <img src="../images/logo_uc.png" alt="Logo de la Universidad" class="box">
 
   <!-- Encabezado -->
   <header>
     <div class="header-titles">
-      <h1 id="main-title" class="title display-2">Módulo</h1>
+      <h1 class="title display-2">Módulo</h1>
       <h2 class="title h4 text-muted display-6">Estudiantes</h2>
     </div>
   </header>
 
-    <!-- Contenido principal -->
+  <!-- Menú -->
   <nav class="menu">
     <ul>
       <li><a href="menu.html">Menu</a></li>
@@ -35,35 +38,202 @@ body{
       <li><a href="cursos.html">Cursos</a></li>
       <li><a href="profesores.html">Profesores</a></li>
       <li><a href="contacto.html">Contacto</a></li>
-      <li><a href="../index.html">Salir</a></li>
+      <li><a href="#" id="btn-salir">Salir</a></li>
     </ul>
   </nav>
 
-  <main style="padding: 20px;">
+  <main>
     <header>
-    <div class="header-titles-sec">
-      <h1 id="main-title" class="title display">Lista de Estudiantes</h1>
-    </div>
+      <div class="header-titles-sec">
+        <h1 class="title display">Lista de Estudiantes</h1>
+      </div>
     </header>
-    <section>
-      <table border="1" style="width:100%; border-collapse:collapse;">
-        <thead style="background-color:#40a561; color:white;">
+
+    <!-- Filtro -->
+    <div class="filtro-container">
+      <input type="text" id="filtro-texto" class="form-control" placeholder="Buscar por nombre, apellidos, correo o carrera..." />
+      <button id="btn-filtrar" class="btn btn-primary">Consultar</button>
+      <button id="btn-limpiar" class="btn btn-secondary">Mostrar todos</button>
+    </div>
+
+    <!-- Alertas -->
+    <div id="alert-top" class="mt-3"></div>
+
+    <!-- Tabla -->
+    <section class="mt-3">
+      <table class="table table-bordered table-hover align-middle text-center table-estudiantes">
+        <thead>
           <tr>
-            <th>ID</th>
+            <th style="width:90px;">ID</th>
             <th>Nombre</th>
-            <th>Apellido</th>
+            <th>Primer apellido</th>
+            <th>Segundo apellido</th>
             <th>Carrera</th>
             <th>Correo</th>
+            <th style="width:220px;">Acciones</th>
           </tr>
         </thead>
-        <tbody>
-          <tr><td>1</td><td>Cecilia</td><td>Madrigal</td><td>Psicología</td><td>cmadrigal@edu.uc.ac.cr</td></tr>
-          <tr><td>2</td><td>Marcos<td>Ramírez</td></td><td>Informática</td><td>mramirez@edu.uc.ac.cr</td></tr>
-          <tr><td>3</td><td>Lucia<td>Quiros</td></td><td>Administración</td><td>lquiros@edu.uc.ac.cr</td></tr>
-        </tbody>
+        <tbody id="lista-estudiantes"></tbody>
       </table>
     </section>
   </main>
+
+  <!-- Formulario -->
+  <div class="form-wrapper">
+    <form id="estudiante-form" class="curso-card">
+      <h2 id="form-title">Registrar estudiante</h2>
+
+      <input type="hidden" id="estudiante-id" />
+
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" class="form-control" required />
+      </div>
+
+      <div class="form-group">
+        <label for="apellido1">Primer apellido</label>
+        <input type="text" id="apellido1" class="form-control" required />
+      </div>
+
+      <div class="form-group">
+        <label for="apellido2">Segundo apellido</label>
+        <input type="text" id="apellido2" class="form-control" required />
+      </div>
+
+      <div class="form-group">
+        <label for="correo">Correo</label>
+        <input type="email" id="correo" class="form-control" required />
+      </div>
+
+      <div class="form-group">
+        <label for="carrera">Carrera</label>
+        <select id="carrera" class="form-select" required>
+          <option value="">-- Seleccione --</option>
+        </select>
+
+        <!-- Opcional: abrir modal para agregar carrera -->
+        <button type="button" class="btn btn-outline-secondary btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#modalNuevaCarrera">
+          + Agregar carrera
+        </button>
+      </div>
+
+      <div class="btn-row d-flex gap-2">
+        <button type="submit" id="btn-save" class="btn btn-success">💾 Guardar</button>
+        <button type="button" id="btn-cancel" class="btn btn-secondary" style="display:none;">❌ Cancelar</button>
+      </div>
+
+      <div id="status" class="mt-2"></div>
+    </form>
+  </div>
+
+  <!-- Modal Editar Estudiante -->
+  <div class="modal fade" id="modalEditarEstudiante" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Editar estudiante</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="modal-body">
+          <input type="hidden" id="modal-estudiante-id" />
+
+          <div class="mb-3 text-start">
+            <label class="form-label" for="modal-nombre">Nombre</label>
+            <input type="text" id="modal-nombre" class="form-control" required />
+          </div>
+
+          <div class="mb-3 text-start">
+            <label class="form-label" for="modal-apellido1">Primer apellido</label>
+            <input type="text" id="modal-apellido1" class="form-control" required />
+          </div>
+
+          <div class="mb-3 text-start">
+            <label class="form-label" for="modal-apellido2">Segundo apellido</label>
+            <input type="text" id="modal-apellido2" class="form-control" required />
+          </div>
+
+          <div class="mb-3 text-start">
+            <label class="form-label" for="modal-correo">Correo</label>
+            <input type="email" id="modal-correo" class="form-control" required />
+          </div>
+
+          <div class="mb-3 text-start">
+            <label class="form-label" for="modal-carrera">Carrera</label>
+            <select id="modal-carrera" class="form-select" required></select>
+          </div>
+
+          <div id="modal-status" class="small"></div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" id="btn-modal-guardar" class="btn btn-success">Actualizar</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Confirmar Eliminación -->
+  <div class="modal fade" id="modalConfirmDelete" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmar eliminación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="modal-body">
+          ¿Seguro que desea eliminar este estudiante?
+          <div class="mt-2 small text-muted" id="delete-info"></div>
+          <div id="delete-status" class="small mt-2"></div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" id="btn-confirm-delete" class="btn btn-danger">Sí, eliminar</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Nueva Carrera -->
+  <div class="modal fade" id="modalNuevaCarrera" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Agregar carrera</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="mb-3 text-start">
+            <label class="form-label" for="carrera-nueva">Nombre de la carrera</label>
+            <input type="text" id="carrera-nueva" class="form-control" placeholder="Ej: Ingeniería Informática" />
+          </div>
+          <div id="carrera-status" class="small"></div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" id="btn-guardar-carrera" class="btn btn-primary">Guardar carrera</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="auth-guard.js"></script>
+<script type="module" src="../estudiantes.js"></script>
 
 </body>
 </html>
