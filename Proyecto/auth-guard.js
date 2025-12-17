@@ -16,7 +16,7 @@ async function guard() {
     return;
   }
 
-  // Si sí hay sesión -> marca auth local para tu app (opcional)
+  // Si sí hay sesión -> marca auth local para tu app
   sessionStorage.setItem("auth", "1");
 }
 
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // ✅ Cerrar sesión REAL de Supabase
       await supabase.auth.signOut();
 
-      // Limpieza extra (opcional)
+      // Limpieza extra
       sessionStorage.clear();
       localStorage.removeItem("usuario");
       localStorage.removeItem("token");

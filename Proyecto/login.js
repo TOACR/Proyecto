@@ -31,10 +31,10 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  // Marcar sesión para tus páginas (opcional, pero útil)
+  // Marcar sesión para tus páginas
   sessionStorage.setItem("auth", "1");
 
-  // Ir al menú SIN permitir volver con atrás
+  // Ir al login SIN permitir volver con atrás
   window.location.replace("login.html");
 });
 

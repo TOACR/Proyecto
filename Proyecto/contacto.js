@@ -1,8 +1,6 @@
 import { supabase } from "./supabaseClient.js"; 
 
-// =====================
 // Helpers UI
-// =====================
 function showAlert(container, message, type = "info") {
   container.innerHTML = `
     <div class="alert alert-${type} alert-dismissible fade show" role="alert">
@@ -21,12 +19,10 @@ function setLoading(btn, loading, textLoading = "Enviando...") {
     : btn.dataset._oldText;
 }
 
-// =====================
 // DOM
-// =====================
 const form = document.querySelector("form.needs-validation");
 const statusDiv = document.getElementById("form-status") || (() => {
-  // Si no existe, lo creamos debajo del botón para no romper tu HTML actual
+  // creamos debajo del botón para no romper HTML actual
   const d = document.createElement("div");
   d.id = "form-status";
   d.className = "mt-3";
