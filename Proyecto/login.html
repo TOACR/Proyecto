@@ -14,6 +14,7 @@ body{
 </style>
 
 <body> 
+  <div class="container-uc">
   <!-- Logo institucional -->
   <img src="images/logo_uc.png" 
        alt="Logo de la Universidad" 
@@ -33,13 +34,11 @@ body{
       display:flex;
       justify-content: center;
       align-items: center;
-      height: 70vh;
-    "
-  >
+      height: 70vh;">
     <section>
-      <div class="card-demo">  
+    <div class="card-demo">
       <h2 style="text-align: center">Iniciar Sesión</h2>
-      <form id="login-form" style="display:flex; flex-direction:column; gap:10px">
+        <form id="login-form" style="display:flex; flex-direction:column; gap:10px">
         <!-- Correo (email) -->
         <div class="mb-3">
           <label for="correo" class="form-label">Correo electrónico</label>
@@ -127,7 +126,10 @@ body{
       <p style="font-size: 12px;">Para más información, visite nuestro sitio web.</p>
     </section>
   </footer>
+</div>
 <script>
+  // validación de formato de correo
+
 const formLogin = document.getElementById("login-form");
 const inputCorreo = document.getElementById("correo");
 
@@ -156,4 +158,3 @@ formLogin.addEventListener("submit", (e) => {
 <script type="module" src="login.js"></script>
 </body>
 </html>
-

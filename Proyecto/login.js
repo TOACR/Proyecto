@@ -4,6 +4,7 @@ if (data.session) {
   sessionStorage.setItem("auth", "1");
   window.location.replace("pages/menu.html");
 }
+// DOM Document Object Model
 const form = document.getElementById("login-form");
 const correo = document.getElementById("correo");
 const password = document.getElementById("password");
@@ -31,7 +32,7 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  // Marcar sesión para tus páginas
+  // Marcar sesión para las páginas
   sessionStorage.setItem("auth", "1");
 
   // Ir al login SIN permitir volver con atrás

@@ -1,6 +1,6 @@
 import { supabase } from "./supabaseClient.js";
 
-// DOM
+// DOM Document Object Model
 const lista = document.getElementById("lista-profesores");
 const alertTop = document.getElementById("alert-top");
 const filtroTexto = document.getElementById("filtro-texto");
@@ -12,7 +12,6 @@ document.getElementById("btn-limpiar").addEventListener("click", () => {
 
 const form = document.getElementById("profesor-form");
 const statusDiv = document.getElementById("status");
-
 const iNombre = document.getElementById("nombre");
 const iA1 = document.getElementById("apellido1");
 const iA2 = document.getElementById("apellido2");
@@ -52,7 +51,6 @@ function clearAlert(targetEl){ targetEl.innerHTML = ""; }
 function getSelectedValues(select) {
   return Array.from(select.selectedOptions).map(o => Number(o.value));
 }
-
 
 // Cargar selects
 async function cargarCarreras() {
@@ -106,9 +104,8 @@ async function cargarProfesores() {
     return;
   }
 
-  // ================================
+
   // MAP 
-  // ================================
 const map = new Map();
 
 pcs.forEach(x => {
@@ -214,9 +211,8 @@ form.addEventListener("submit", async (e) => {
 
   statusDiv.innerHTML = `<div class="alert alert-info">Guardando profesor...</div>`;
 
-  // =============================
-  // 1️⃣ Insertar PROFESOR
-  // =============================
+
+  // Insertar PROFESOR
   const { data: profesor, error } = await supabase
     .from("Profesores")
     .insert([payload])
@@ -231,9 +227,7 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  // =============================
-  // 2️⃣ Insertar CURSOS (tabla puente)
-  // =============================
+  // Insertar CURSOS (tabla puente)
 const rows = cursosIds.map(cursoId => ({
   profesor_id: profesor.id,
   curso_id: cursoId
@@ -242,7 +236,7 @@ const rows = cursosIds.map(cursoId => ({
 const { data: inserted, error: errorCursos } = await supabase
   .from("ProfesoresCursos")
   .insert(rows)
-  .select("id, profesor_id, curso_id");  // 👈 confirma cuántos insertó
+  .select("id, profesor_id, curso_id");  // confirma cuántos insertó
 
 console.log("cursosIds:", cursosIds);
 console.log("rows:", rows);
@@ -258,12 +252,9 @@ if (errorCursos) {
     Profesor registrado correctamente ✅ (cursos insertados: ${inserted?.length ?? 0})
   </div>`;
 }
-
-
   form.reset();
   await cargarProfesores();
 });
-
 
 // Click tabla
 lista.addEventListener("click", async (e) => {
@@ -305,7 +296,7 @@ lista.addEventListener("click", async (e) => {
   }
 });
 
-// Actualizar desde modal (profesor + re-asignar 1 curso)
+// Actualizar desde modal (profesor + re-asignar cursos)
 async function actualizarDesdeModal() {
 
   document.getElementById("btn-modal-guardar")

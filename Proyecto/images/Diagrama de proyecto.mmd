@@ -1,37 +1,46 @@
 classDiagram
+    direction LR
+
     class login {
         -correo: string
         -password: string
     }
 
     class menu {
-        -menu:  link button
         -estudiante: link button
         -curso: link button
         -profesor: link button
         -contacto: link button
         -salir: link button
     }
+
     class estudiante {
         -id_estudiante: int
         -nombre: string
-        -apellido: string
-        -carrera: string
+        -apellido1: string
+        -apellido2: string
         -correo: string
+        -carrera: string
+        -curso: string
+        -salir: link button
     }
 
     class curso {
         -codigo: string
         -nombre: string
-        -creditos_ int 
+        -creditos: int
+        -salir: link button
     }
 
     class profesor {
-        -id_profesor: int 
+        -id_profesor: int
         -nombre: string
-        -apellido: string
-        -especialidad: string
+        -apellido1: string
+        -apellido2: string
         -correo: string
+        -carrera: string
+        -curso: string
+        -salir: link button
     }
 
     class contacto {
@@ -39,21 +48,33 @@ classDiagram
         -correo: string
         -asunto: string
         -mensaje: string
-    }
-    class salir{
         -salir: link button
     }
 
-    login "estudiante" --> menu: ingresa
-    login "profesor" --> menu: ingresa
-    menu "estudiante" --> estudiante
-    menu "profesor" --> profesor
-    estudiante "*" --> curso: puede matricular
-    profesor "*" --> curso: puede impartir
-    curso "*" --> contacto
-    contacto "1" --> salir
-    salir "1" --> login: cierra sesión
-    
+    class salir {
+        -cerrarSesion()
+    }
+
+    %% Flujo principal
+    login --> menu : "autentica"
+    menu --> estudiante : "abre"
+    menu --> curso : "abre"
+    menu --> profesor : "abre"
+    menu --> contacto : "abre"
+
+    %% Relaciones de dominio
+    estudiante "0..*" -- "0..*" curso : "matrícula"
+    profesor  "0..*" -- "0..*" curso : "imparte"
+
+    %% Botón salir en TODAS las vistas
+    menu ..> salir : "cerrar sesión"
+    estudiante ..> salir : "cerrar sesión"
+    profesor ..> salir : "cerrar sesión"
+    curso ..> salir : "cerrar sesión"
+    contacto ..> salir : "cerrar sesión"
+
+    %% Salir siempre vuelve al login
+    salir --> login : "redirige"
 
 
     

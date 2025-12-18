@@ -22,7 +22,7 @@ function setLoading(btn, loading, textLoading = "Enviando...") {
 // DOM
 const form = document.querySelector("form.needs-validation");
 const statusDiv = document.getElementById("form-status") || (() => {
-  // creamos debajo del botón para no romper HTML actual
+// creamos debajo del botón para no romper HTML
   const d = document.createElement("div");
   d.id = "form-status";
   d.className = "mt-3";
@@ -36,7 +36,7 @@ const iAsunto = document.getElementById("asunto");
 const iMensaje = document.getElementById("mensaje");
 const btnEnviar = form?.querySelector('button[type="submit"]');
 
-// Honeypot (anti-bots). Si no existe en HTML, lo agregamos invisible.
+// Honeypot (anti-bots).
 let honeypot = form?.querySelector('input[name="empresa"]');
 if (form && !honeypot) {
   honeypot = document.createElement("input");
@@ -51,7 +51,7 @@ if (form && !honeypot) {
   form.appendChild(honeypot);
 }
 
-// Contador de caracteres (opcional, pero útil)
+// Contador de caracteres
 const maxMsg = 500;
 if (iMensaje) {
   iMensaje.maxLength = maxMsg;
@@ -69,9 +69,7 @@ if (iMensaje) {
   updateCounter();
 }
 
-// =====================
 // Bootstrap Validation + Submit
-// =====================
 (function initValidationAndSubmit() {
   if (!form) return;
 
@@ -92,14 +90,13 @@ if (iMensaje) {
       return;
     }
 
-    // Payload a guardar
+// Payload a guardar
 const payload = {
   nombre: iNombre.value.trim(),
   correo: iCorreo.value.trim(),
   asunto: iAsunto.value.trim() || null,
   mensaje: iMensaje.value.trim()
 };
-
 
     // Reglas extra opcionales
     if (payload.mensaje.length < 5) {
@@ -144,14 +141,3 @@ const payload = {
     }
   }, false);
 })();
-
-// =====================
-// Salir (si lo usas)
-// =====================
-document.getElementById("btn-salir")?.addEventListener("click", (e) => {
-  e.preventDefault();
-  // Si tú manejas sesión en localStorage/sessionStorage, limpia aquí:
-  // localStorage.removeItem("token");
-  // sessionStorage.clear();
-  window.location.href = "./index.html"; // ajusta si tu login tiene otro nombre
-});

@@ -1,5 +1,6 @@
 import { supabase } from "./supabaseClient.js";
 
+// DOM Document Object Model
 const lista = document.getElementById("lista-estudiantes");
 const alertTop = document.getElementById("alert-top");
 const filtroTexto = document.getElementById("filtro-texto");
@@ -98,7 +99,7 @@ let cacheEstudiantes = [];
 async function cargarEstudiantes() {
   clearAlert(alertTop);
 
-  // FK carrera_id -> Carreras.id para poder traer el nombre así
+  // FK carrera_id -> Carreras.id para poder traer el nombre
   const { data, error } = await supabase
     .from("Estudiantes")
     .select("id,nombre,apellido1,apellido2,correo,carrera_id,Carreras(nombre)");
@@ -112,7 +113,7 @@ async function cargarEstudiantes() {
   cacheEstudiantes = data || [];
   pintarTabla(cacheEstudiantes);
 
-  // 👇 Nuevo: llena combo de matrícula si existe
+  // Nuevo: llena combo de matrícula si existe
   cargarComboEstudiantesMatricula();
 }
 
@@ -212,16 +213,15 @@ form.addEventListener("submit", async (ev) => {
   limpiarForm();
   await cargarEstudiantes();
 
-  // 👇 Nuevo: si existe la matrícula, refresca para que aparezca el estudiante nuevo
+  // Nuevo: si existe la matrícula, refresca para que aparezca el estudiante nuevo
   await recargarMatriculaSiExiste();
 });
 
 // ======= Click tabla (editar / eliminar) =======
 lista.addEventListener("click", (ev) => {
 
-  // ==========================
+
   // CLICK EN FILA → MATRÍCULA
-  // ==========================
   const tr = ev.target.closest("tr");
   if (tr && tr.children.length) {
     const estudianteId = tr.children[0]?.textContent?.trim();
@@ -235,9 +235,8 @@ lista.addEventListener("click", (ev) => {
     }
   }
 
-  // ==========================
+
   // BOTONES EDITAR / ELIMINAR
-  // ==========================
   const btnEdit = ev.target.closest(".btn-edit");
   const btnDel = ev.target.closest(".btn-delete");
 
@@ -261,7 +260,6 @@ lista.addEventListener("click", (ev) => {
     modalDelete.show();
   }
 });
-
 
 // ======= Actualizar desde modal =======
 async function actualizarDesdeModal() {
@@ -294,7 +292,7 @@ async function actualizarDesdeModal() {
   modalEdit.hide();
   await cargarEstudiantes();
 
-  // 👇 Nuevo
+  // Nuevo
   await recargarMatriculaSiExiste();
 }
 
@@ -323,7 +321,7 @@ btnConfirmDelete.addEventListener("click", async () => {
   modalDelete.hide();
   await cargarEstudiantes();
 
-  // 👇 Nuevo
+  // Nuevo
   await recargarMatriculaSiExiste();
 
   btnConfirmDelete.disabled = false;
@@ -353,9 +351,8 @@ async function guardarCarrera() {
   await cargarCarreras();
 }
 
-// ===========================
+
 // MATRÍCULA DE CURSOS
-// ===========================
 let _matriculaReady = false;
 
 async function initMatricula() {
@@ -472,7 +469,7 @@ async function initMatricula() {
     await recargarMatriculaUI();
   });
 
-  // Delegación: quitar matrícula
+  // Quitar matrícula
   tbodyMat.addEventListener("click", async (e) => {
     const btn = e.target.closest("button[data-ecid]");
     if (!btn) return;

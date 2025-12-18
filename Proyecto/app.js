@@ -1,11 +1,10 @@
 import { supabase } from "./supabaseClient.js";
 sessionStorage.setItem("auth", "1");
 
-// ===============================
+// DOM Document Object Model
 // Elementos del formulario (Crear)
-// ===============================
 const form = document.getElementById("curso-form");
-const inputId = document.getElementById("curso-id"); // se mantiene, pero solo para compatibilidad
+const inputId = document.getElementById("curso-id"); 
 const inputCodigo = document.getElementById("codigo");
 const inputNombre = document.getElementById("nombre");
 const inputCreditos = document.getElementById("creditos");
@@ -13,23 +12,18 @@ const btnSave = document.getElementById("btn-save");
 const btnCancel = document.getElementById("btn-cancel");
 const statusDiv = document.getElementById("status");
 const alertTop = document.getElementById("alert-top");
-
-
 let listaCursos = document.getElementById("lista-cursos");
 
-// ===============================
+
 // Elementos de filtro
-// ===============================
 const filtroTexto = document.getElementById("filtro-texto");
 const btnFiltrar = document.getElementById("btn-filtrar");
 const btnLimpiar = document.getElementById("btn-limpiar");
 
-// ===============================
+
 // Modal (Editar)
-// ===============================
 const modalEl = document.getElementById("modalEditarCurso");
 const modal = modalEl ? new bootstrap.Modal(modalEl) : null;
-
 const mId = document.getElementById("modal-curso-id");
 const mCodigo = document.getElementById("modal-codigo");
 const mNombre = document.getElementById("modal-nombre");
@@ -40,7 +34,6 @@ const btnModalGuardar = document.getElementById("btn-modal-guardar");
 // Modal Confirm Delete
 const modalDeleteEl = document.getElementById("modalConfirmDelete");
 const modalDelete = modalDeleteEl ? new bootstrap.Modal(modalDeleteEl) : null;
-
 const deleteInfo = document.getElementById("delete-info");
 const deleteStatus = document.getElementById("delete-status");
 const btnConfirmDelete = document.getElementById("btn-confirm-delete");
@@ -58,11 +51,7 @@ if (modalDeleteEl) {
   });
 }
 
-
-
-// ===============================
 // Eventos
-// ===============================
 
 // Crear curso (siempre INSERT desde el form principal)
 form.addEventListener("submit", async (e) => {
@@ -76,7 +65,6 @@ form.addEventListener("submit", async (e) => {
 
 clearAlert(statusDiv);
 clearAlert(alertTop);
-
 showAlert(statusDiv, "Guardando...", "info");
 
 const ok = await crearCurso(codigo, nombre, creditos);
@@ -88,10 +76,9 @@ if (ok) {
 } else {
   showAlert(statusDiv, "Error al guardar el curso.", "danger");
 }
-
 });
 
-// El botón cancelar del form (si lo dejas visible) solo limpia
+// Botón cancelar del form
 btnCancel.addEventListener("click", () => {
   limpiarFormularioCrear();
 });
@@ -110,7 +97,7 @@ if (btnDelete) {
 
   deleteIdPendiente = btnDelete.getAttribute("data-id");
 
-  // Info opcional: mostrar el curso (código/nombre) si quieres
+  // Información: mostrar el curso (código/nombre)
   const tr = btnDelete.closest("tr");
   const codigo = tr?.children?.[0]?.textContent ?? "";
   const nombre = tr?.children?.[1]?.textContent ?? "";
@@ -120,7 +107,6 @@ if (btnDelete) {
   modalDelete.show();
   return;
 }
-
 
   // Editar (Abrir modal)
   if (btnEdit) {
@@ -228,11 +214,7 @@ if (btnConfirmDelete) {
   });
 }
 
-
-
-// ===============================
 // Funciones UI
-// ===============================
 function limpiarFormularioCrear() {
   form.reset();
   inputId.value = ""; // por compatibilidad
@@ -260,9 +242,8 @@ function filtrarCursos() {
   });
 }
 
-// ===============================
+
 // Cargar tabla
-// ===============================
 async function cargarCursos() {
   let { data: cursos, error } = await supabase.from("Cursos").select("*");
 
@@ -300,9 +281,8 @@ async function cargarCursos() {
   });
 }
 
-// ===============================
+
 // CRUD
-// ===============================
 async function crearCurso(codigo, nombre, creditos) {
   const curso = { codigo, nombre, creditos };
   const { error } = await supabase.from("Cursos").insert([curso]);

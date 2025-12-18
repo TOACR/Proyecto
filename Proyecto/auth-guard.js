@@ -4,7 +4,8 @@ const path = window.location.pathname.toLowerCase();
 const isLogin = path.endsWith("/login.html");
 
 async function guard() {
-  // ✅ No aplicar guard en login
+
+  //  No aplicar guard en login
   if (isLogin) return;
 
   const { data, error } = await supabase.auth.getSession();
@@ -30,10 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
     btnSalir.addEventListener("click", async (e) => {
       e.preventDefault();
 
-      // ✅ Cerrar sesión REAL de Supabase
+      // Cierra sesión REAL de Supabase
       await supabase.auth.signOut();
 
-      // Limpieza extra
+      // Limpiar todo
       sessionStorage.clear();
       localStorage.removeItem("usuario");
       localStorage.removeItem("token");
@@ -43,4 +44,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-
